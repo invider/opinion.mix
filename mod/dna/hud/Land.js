@@ -2,6 +2,8 @@ const df = {
     dx: 0,
     dy: 0,
     zoom: 1,
+    wheelFeedback: 100,
+    scrollFactor: 0.1,
 }
 
 class Land extends dna.hud.Container {
@@ -32,6 +34,7 @@ class Land extends dna.hud.Container {
         if (this.hidden) return
         save()
         translate(this.x + this.dx, this.y + this.dy)
+        scale(this.zoom, this.zoom)
 
         if (this.clip) {
             ctx.beginPath()
@@ -46,9 +49,14 @@ class Land extends dna.hud.Container {
         restore()
     }
 
-    onMouseDrag(dx, dy) {
-        log('delta: ' + dx + 'x' + dy)
+    onMouseWheel(d, x, y, e) {
+        const times = floor(abs(d)/ this.wheelFeedback)
+        const unit = 0.05 * times
+        let rate = d < 0? 1-unit : 1+unit
+        this.zoom *= rate
+    }
 
+    onMouseDrag(dx, dy) {
         if (this.__.captured.length === 1) {
             // only land is captured
             this.dx += dx
