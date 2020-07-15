@@ -1,0 +1,13 @@
+# MacOS
+.DS_Store
+
+# collider
+out
+dist
+*.zip
+*.tar
+*.tgz
+*.log
+*.pid
+*.cache
+
