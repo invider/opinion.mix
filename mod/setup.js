@@ -13,6 +13,9 @@ function setup() {
         rw: .7,
         rh: 1,
         rb: 0,
+
+        dx: 200,
+        dy: 200,
     })
     _.link(land)
 
