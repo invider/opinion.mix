@@ -103,8 +103,11 @@ class Land extends dna.hud.Container {
 
     onMouseDown(x, y, b, e) {
         super.onMouseDown(x, y, b, e)
+
         if (b & 2) {
-            log('beeee menu')
+            if (env.touched) {
+                log('picked ' + env.touched.name)
+            }
         }
     }
 

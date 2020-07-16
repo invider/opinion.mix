@@ -16,6 +16,14 @@ class Napkin {
         if (!this.name) this.name = 'napkin' + (++id)
     }
 
+    select() {
+        this.selected = true
+    }
+
+    release() {
+        this.selected = false
+    }
+
     draw() {
         fill('#808020')
         rect(this.x, this.y, this.w, this.h)
@@ -25,6 +33,12 @@ class Napkin {
             baseTop()
             alignLeft()
             text(this.caption, this.x+10, this.y+10)
+        }
+
+        if (this.selected) {
+            stroke('orange')
+            lineWidth(3)
+            rect(this.x, this.y, this.w, this.h)
         }
     }
 
