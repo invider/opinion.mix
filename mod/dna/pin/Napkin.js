@@ -32,9 +32,11 @@ class Napkin {
         //log('napkin mouse down @' + x + ':' + y)
     }
 
-    onMouseDrag(dx, dy) {
-        this.x += dx / this.__.zoom
-        this.y += dy / this.__.zoom
+    onMouseDrag(dx, dy, e) {
+        if (e.buttons & 1) {
+            this.x += dx / this.__.zoom
+            this.y += dy / this.__.zoom
+        }
     }
 
     poke(x, y) {

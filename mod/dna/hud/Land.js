@@ -101,8 +101,15 @@ class Land extends dna.hud.Container {
         restore()
     }
 
-    onMouseDrag(dx, dy) {
-        if (this.__.captured.length === 1) {
+    onMouseDown(x, y, b, e) {
+        super.onMouseDown(x, y, b, e)
+        if (b & 2) {
+            log('beeee menu')
+        }
+    }
+
+    onMouseDrag(dx, dy, e) {
+        if ((e.buttons & 1) && this.__.captured.length === 1) {
             // only land is captured
             this.dx -= dx/this.zoom
             this.dy -= dy/this.zoom
