@@ -13,7 +13,6 @@ function mouseDown(e) {
     }
 
     if ((e.buttons & 1) && !last) {
-        log('try to kill the menu')
         if (_.land.orbital) {
             _.land.orbital.detach()
         }

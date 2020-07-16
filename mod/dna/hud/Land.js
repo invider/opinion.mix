@@ -111,6 +111,7 @@ class Land extends dna.hud.Container {
 
             const menu = _.land.spawn('hud/OrbitalMenu', {
                 name: 'orbital',
+                target: env.touched,
                 x: x,
                 y: y,
             })

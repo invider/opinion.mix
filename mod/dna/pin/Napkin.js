@@ -14,6 +14,7 @@ class Napkin {
         augment(this, df)
         augment(this, st)
         if (!this.name) this.name = 'napkin' + (++id)
+        if (!this.caption) this.caption = this.name
     }
 
     select() {
