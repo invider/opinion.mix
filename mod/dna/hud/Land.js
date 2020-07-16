@@ -108,6 +108,13 @@ class Land extends dna.hud.Container {
             if (env.touched) {
                 log('picked ' + env.touched.name)
             }
+
+            const menu = _.land.spawn('hud/OrbitalMenu', {
+                name: 'orbital',
+                x: x,
+                y: y,
+            })
+            menu.populate()
         }
     }
 
