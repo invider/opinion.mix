@@ -28,13 +28,17 @@ class Napkin {
         }
     }
 
+    onMouseDown(x, y, b, e) {
+        //log('napkin mouse down @' + x + ':' + y)
+    }
+
     onMouseDrag(dx, dy) {
-        this.x += dx
-        this.y += dy
+        this.x += dx / this.__.zoom
+        this.y += dy / this.__.zoom
     }
 
     poke(x, y) {
-        log('pock: ' + floor(x) + 'x' + floor(y))
+        //log('pock: ' + floor(x) + 'x' + floor(y))
         if (x >= this.x && x <= this.x + this.w
                 && y >= this.y && y <= this.y + this.h) {
             log('poked ' + this.name)

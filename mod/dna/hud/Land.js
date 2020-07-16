@@ -101,18 +101,19 @@ class Land extends dna.hud.Container {
         restore()
     }
 
-    onMouseWheel(d, x, y, e) {
-        const times = floor(abs(d)/ this.wheelFeedback)
-        const unit = 0.05 * times
-        let rate = d < 0? 1-unit : 1+unit
-        this.zoom *= rate
-    }
-
     onMouseDrag(dx, dy) {
         if (this.__.captured.length === 1) {
             // only land is captured
             this.dx -= dx/this.zoom
             this.dy -= dy/this.zoom
         }
+    }
+
+    onMouseWheel(d, x, y, e) {
+        //super.onMouseWheel(d, x, y, e)
+        const times = floor(abs(d)/ this.wheelFeedback)
+        const unit = 0.05 * times
+        let rate = d < 0? 1-unit : 1+unit
+        this.zoom *= rate
     }
 }
