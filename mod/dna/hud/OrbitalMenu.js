@@ -14,54 +14,36 @@ class OrbitalMenu extends dna.hud.Container {
         return y - this.y
     }
 
-    populate() {
+    populate(actions) {
         let name = 'empty'
         if (this.target) name = this.target.name
 
-        this.spawn('hud/gadget/Button', {
-            x: 100, y: 0,
-            w: 50, h: 20,
-            text: name,
-            onClick: function() {
-                log('selected ' + this.text)
-                this.__.kill()
-            }
-        })
-        this.spawn('hud/gadget/Button', {
-            x: 85, y: 50,
-            w: 50, h: 20,
-            text: 'inject',
-            onClick: function() {
-                log('injected new')
-                if (!this.target) {
-                    _.land.spawn('pin/Napkin', {
-                        x: this.__.x,
-                        y: this.__.y,
-                        w: 200,
-                        h: 100,
-                    })
-                }
-                this.__.kill()
-            }
-        })
-        this.spawn('hud/gadget/Button', {
-            x: 40, y: 90,
-            w: 50, h: 20,
-            text: 'reject',
-            onClick: function() {
-                log('rejected')
-                if (this.__.target) {
-                    this.__.target.__.detach(this.__.target)
-                }
-                this.__.kill()
-            }
+        // clean up existing actions
+        this.detachAll()
+
+        // fill actions
+        let x = 100
+        let y = 0
+        let theta = TAU - .2
+
+        const R = this.r
+        actions.forEach(a => {
+            const x = R * cos(theta) - R*0.5
+            const y = R * sin(theta) - R*0.2
+            this.spawn('hud/OrbitalButton', {
+                x: x, y: y,
+                w: 50, h: 20,
+                text: a.text,
+                onClick: a.action,
+            })
+            theta += .35
         })
     }
 
     drawBackground() {
-        stroke('#303035')
-        lineWidth(2)
-        circle(0, 0, 100)
+        //stroke('#303035')
+        //lineWidth(2)
+        //circle(0, 0, this.r)
     }
 
     kill() {

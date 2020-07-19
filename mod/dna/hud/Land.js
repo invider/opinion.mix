@@ -114,8 +114,54 @@ class Land extends dna.hud.Container {
                 target: env.touched,
                 x: x,
                 y: y,
+                r: 120,
             })
-            menu.populate()
+
+            menu.populate([
+                {
+                    text: 'new',
+                    action: function() {
+                        log('injected new')
+                        if (!this.target) {
+                            _.land.spawn('pin/Napkin', {
+                                x: this.__.x,
+                                y: this.__.y,
+                                w: 200,
+                                h: 100,
+                            })
+                        }
+                        this.__.kill()
+                    }
+                },
+                {
+                    text: 'reject',
+                    action: function() {
+                        log('rejected')
+                        if (this.__.target) {
+                            this.__.target.__.detach(this.__.target)
+                        }
+                        this.__.kill()
+                    }
+                },
+                {
+                    text: 'some',
+                    action: function() {
+                        log(this._.name)
+                    },
+                },
+                {
+                    text: 'another',
+                    action: function() {
+                        log(this._.name)
+                    },
+                },
+                {
+                    text: 'git',
+                    action: function() {
+                        log(this._.name)
+                    },
+                },
+            ])
         }
     }
 
