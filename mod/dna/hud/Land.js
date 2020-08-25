@@ -134,16 +134,6 @@ class Land extends dna.hud.Container {
                     }
                 },
                 {
-                    text: 'reject',
-                    action: function() {
-                        log('rejected')
-                        if (this.__.target) {
-                            this.__.target.__.detach(this.__.target)
-                        }
-                        this.__.kill()
-                    }
-                },
-                {
                     text: 'some',
                     action: function() {
                         log(this._.name)
@@ -160,6 +150,16 @@ class Land extends dna.hud.Container {
                     action: function() {
                         log(this._.name)
                     },
+                },
+                {
+                    text: 'reject',
+                    action: function() {
+                        log('rejected')
+                        if (this.__.target) {
+                            this.__.target.__.detach(this.__.target)
+                        }
+                        this.__.kill()
+                    }
                 },
             ])
         }

@@ -54,6 +54,10 @@ class Napkin {
         }
     }
 
+    onFocus() {
+        log('focused')
+    }
+
     poke(x, y) {
         //log('pock: ' + floor(x) + 'x' + floor(y))
         if (x >= this.x && x <= this.x + this.w
