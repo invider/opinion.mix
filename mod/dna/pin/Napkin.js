@@ -5,6 +5,7 @@ const df = {
     y: 0,
     w: 100,
     h: 100,
+    _centered: false,
 }
 
 let id = 0
@@ -42,9 +43,13 @@ class Napkin {
             rect(this.x, this.y, this.w, this.h)
         }
     }
+    
+    onClick(x, y, b, e) {
+        log('napkin mouse click @' + x + ':' + y)
+    }
 
     onMouseDown(x, y, b, e) {
-        //log('napkin mouse down @' + x + ':' + y)
+        log('napkin mouse down @' + x + ':' + y)
     }
 
     onMouseDrag(dx, dy, e) {
@@ -62,7 +67,20 @@ class Napkin {
         //log('pock: ' + floor(x) + 'x' + floor(y))
         if (x >= this.x && x <= this.x + this.w
                 && y >= this.y && y <= this.y + this.h) {
-            log('poked ' + this.name)
+            //log('poked ' + this.name)
         }
+    }
+
+    pick(x, y, ls) {
+        if (x >= this.x && x <= this.x + this.w
+                && y >= this.y && y <= this.y + this.h) {
+            ls.push(this)
+            return this
+        }
+    }
+
+    within(x, y) {
+        return (x >= this.x && x <= this.x + this.w
+            && y >= this.y && y <= this.y + this.h)
     }
 }

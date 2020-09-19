@@ -38,6 +38,7 @@ function setup() {
         caption: 'Napkin 0x0',
     })
 
+    /*
     _.land.spawn('pin/Napkin', {
         x: 400,
         y: 400,
@@ -53,5 +54,6 @@ function setup() {
         h: 50,
         caption: 'Napkin -4x4',
     })
+    */
 
 }
