@@ -45,11 +45,11 @@ class Napkin {
     }
     
     onClick(x, y, b, e) {
-        log('napkin mouse click @' + x + ':' + y)
+        //log('napkin mouse click @' + x + ':' + y)
     }
 
     onMouseDown(x, y, b, e) {
-        log('napkin mouse down @' + x + ':' + y)
+        //log('napkin mouse down @' + x + ':' + y)
     }
 
     onMouseDrag(dx, dy, e) {
@@ -60,7 +60,7 @@ class Napkin {
     }
 
     onFocus() {
-        log('focused')
+        //log('focused')
     }
 
     poke(x, y) {

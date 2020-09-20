@@ -136,19 +136,19 @@ class Land extends dna.hud.Container {
                 {
                     text: 'some',
                     action: function() {
-                        log(this._.name)
+                        log('something')
                     },
                 },
                 {
                     text: 'another',
                     action: function() {
-                        log(this._.name)
+                        log('another')
                     },
                 },
                 {
                     text: 'git',
                     action: function() {
-                        log(this._.name)
+                        log('git split')
                     },
                 },
                 {
@@ -166,7 +166,8 @@ class Land extends dna.hud.Container {
     }
 
     onMouseDrag(dx, dy, e) {
-        if ((e.buttons & 1) && this.__.captured.length === 1) {
+        if ((e.ctrlKey || e.altKey) && (e.buttons & 1)
+                    && this.__.captured.length === 1) {
             // only land is captured
             this.dx -= dx/this.zoom
             this.dy -= dy/this.zoom
