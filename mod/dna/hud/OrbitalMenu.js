@@ -22,21 +22,25 @@ class OrbitalMenu extends dna.hud.Container {
         this.detachAll()
 
         // fill actions
-        let x = 100
-        let y = 0
+        let x = 50
+        let y = -50
+        let shift = 5
         let theta = TAU - .2
 
         const R = this.r
         actions.forEach(a => {
-            const x = R * cos(theta) - R*0.5
-            const y = R * sin(theta) - R*0.2
+            //const x = R * cos(theta) - R*0.5
+            //const y = R * sin(theta) - R*0.2
             this.spawn('hud/OrbitalButton', {
                 x: x, y: y,
                 w: 50, h: 20,
                 text: a.text,
                 onClick: a.action,
             })
-            theta += .35
+            y += 40
+            x -= shift
+            shift += 15
+            //theta += .35
         })
     }
 
