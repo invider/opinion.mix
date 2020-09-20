@@ -11,6 +11,10 @@ class Land extends dna.hud.Container {
     constructor(st) {
         super(st)
         supplement(this, df)
+        this.selection = {
+            active: false,
+        }
+        this.captured = []
     }
 
     adjust() {
@@ -65,6 +69,59 @@ class Land extends dna.hud.Container {
         line(x, y-w, x, y+w)
     }
 
+    capture(node) {
+        if (node.select) {
+            node.select()
+            if (this.captured.indexOf(node) < 0) {
+                this.captured.push(node)
+            }
+        }
+    }
+
+    releaseAll() {
+        this.captured.forEach(node => {
+            node.release()
+        })
+        this.captured = []
+    }
+
+    applyArea(x1, y1, x2, y2, fn) {
+        this._ls.forEach(n => {
+            if (!n._sizable) return
+            if (n.x >= x1 && n.x + n.w <= x2
+                    && n.y >= y1 && n.y + n.h <= y2) {
+                fn(n)
+            }
+        })
+    }
+
+    selectArea(x1, y1, x2, y2) {
+        if (x1 > x2) {
+            const x3 = x1
+            x1 = x2
+            x2 = x3
+        }
+        if (y1 > y2) {
+            const y3 = y1
+            y1 = y2
+            y2 = y3
+        }
+        
+        const land = this
+        this.applyArea(x1, y1, x2, y2, (node) => {
+            land.capture(node)
+        })
+    }
+
+    dragSelection(dx, dy) {
+        dx /= this.zoom
+        dy /= this.zoom
+        this.captured.forEach(node => {
+            node.x += dx
+            node.y += dy
+        })
+    }
+
     drawBackground() {
         //fill('#101012')
         //rect(0, 0, this.w, this.h)
@@ -98,17 +155,41 @@ class Land extends dna.hud.Container {
         this.drawContent()
         this.drawForeground()
 
+        if (this.selection.active) {
+            lineWidth(2)
+            stroke('#404040')
+            const { x1, y1, x2, y2 } = this.selection
+            const w = x2 - x1
+            const h = y2 - y1
+            rect(x1, y1, w, h)
+        }
+
         restore()
     }
 
     onMouseDown(x, y, b, e) {
         super.onMouseDown(x, y, b, e)
 
-        if (b & 2) {
-            if (env.touched) {
+        const ls = []
+        const current = this.pick(this.gx(x), this.gy(y), ls)
+        env.touched = current
+
+        if (b & 1) {
+            if (current) {
                 log('picked ' + env.touched.name)
+                this.capture(current)
+
+            } else {
+                this.releaseAll()
+
+                this.selection.x1 = x
+                this.selection.x2 = x
+                this.selection.y1 = y
+                this.selection.y2 = y
+                this.selection.active = true
             }
 
+        } else if (b & 2) {
             const menu = _.land.spawn('hud/OrbitalMenu', {
                 name: 'orbital',
                 target: env.touched,
@@ -166,11 +247,33 @@ class Land extends dna.hud.Container {
     }
 
     onMouseDrag(dx, dy, e) {
-        if ((e.ctrlKey || e.altKey) && (e.buttons & 1)
-                    && this.__.captured.length === 1) {
-            // only land is captured
-            this.dx -= dx/this.zoom
-            this.dy -= dy/this.zoom
+        if (e.buttons & 1) {
+            if (!e.ctrlKey && !e.altKey && this.selection.active) {
+                this.selection.x2 += dx/this.zoom
+                this.selection.y2 += dy/this.zoom
+            }
+
+            if ((e.ctrlKey || e.altKey) && this.__.captured.length === 1) {
+                // only land is captured
+                this.dx -= dx/this.zoom
+                this.dy -= dy/this.zoom
+            }
+        }
+    }
+
+
+    onMouseUp(e) {
+        if (this.selection.active) {
+            this.selection.active = false
+            const { x1, y1, x2, y2 } = this.selection
+            this.selectArea(x1, y1, x2, y2)
+
+            log('selected area: '
+                + this.selection.x1 + ':' + this.selection.y1
+                + ' :: ' + this.selection.x2 + ':' + this.selection.y2
+            )
+            log('width: ' + (this.selection.x2 - this.selection.x1))
+            log('height: ' + (this.selection.y2 - this.selection.y1))
         }
     }
 

@@ -1,5 +1,3 @@
-
-
 const df = {
     x: 0,
     y: 0,
@@ -54,8 +52,7 @@ class Napkin {
 
     onMouseDrag(dx, dy, e) {
         if (e.buttons & 1) {
-            this.x += dx / this.__.zoom
-            this.y += dy / this.__.zoom
+            this.__.dragSelection(dx, dy)
         }
     }
 

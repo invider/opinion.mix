@@ -1,17 +1,9 @@
 function mouseDown(e) {
     lab.hud.poke(e.pageX, e.pageY)
 
+    // TODO move to Land
     const ls = []
     const last = lab.hud.pick(e.pageX, e.pageY, ls)
-
-    if (env.touched && isFun(env.touched.release)) {
-        env.touched.release()
-    }
-    env.touched = last
-    if (last && isFun(last.select)) {
-        last.select()
-    }
-
     if ((e.buttons & 1) && !last) {
         if (_.land.orbital) {
             _.land.orbital.detach()
