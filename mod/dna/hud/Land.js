@@ -254,15 +254,15 @@ class Land extends dna.hud.Container {
                 this.selection.x2 += dx/this.zoom
                 this.selection.y2 += dy/this.zoom
             }
-
-            if ((e.ctrlKey || e.altKey) && this.__.captured.length === 1) {
+        }
+        if (this.__.captured.length === 1 &&
+                    (((e.buttons & 1) && (e.ctrlKey || e.altKey))
+                        || ((e.buttons & 4) && (!e.ctrlKey && !e.altKey)))) {
                 // only land is captured
                 this.dx -= dx/this.zoom
                 this.dy -= dy/this.zoom
-            }
         }
     }
-
 
     onMouseUp(e) {
         if (this.selection.active) {
