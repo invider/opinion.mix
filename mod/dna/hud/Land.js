@@ -108,6 +108,7 @@ class Land extends dna.hud.Container {
         }
         
         const land = this
+        this.releaseAll()
         this.applyArea(x1, y1, x2, y2, (node) => {
             land.capture(node)
         })
@@ -177,6 +178,7 @@ class Land extends dna.hud.Container {
         if (b & 1) {
             if (current) {
                 log('picked ' + env.touched.name)
+                this.releaseAll()
                 this.capture(current)
 
             } else {
